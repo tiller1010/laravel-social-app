@@ -15,9 +15,11 @@ class MessagesController extends Controller
      */
     public function index()
     {
-        $messages = Message::get();
+        $user = User::where('id', auth()->id())->get()->first();
 
-        return view('Messages.index', compact('messages'));
+        // $messages = Message::where('From_user_id', $user->id)->get();
+        $messages = Message::get();
+        return view('Messages.index')->with(compact('messages'))->with(compact('user'));
         // return view('message', ['From' => 'Tyler', 'Message' => 'Wowowoww']);
     }
 

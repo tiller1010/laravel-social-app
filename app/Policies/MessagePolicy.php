@@ -18,7 +18,7 @@ class MessagePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        
     }
 
     /**
@@ -30,7 +30,7 @@ class MessagePolicy
      */
     public function view(User $user, Message $message)
     {
-        //
+        return ($message->From_user_id == $user->id || $message->To_user_id == $user->id);
     }
 
     /**
@@ -53,7 +53,7 @@ class MessagePolicy
      */
     public function update(User $user, Message $message)
     {
-        return ($message->From_user_id == $user->id || $message->To_user_id == $user->id);
+        
     }
 
     /**
