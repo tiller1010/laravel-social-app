@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Message;
+use App\User;
 
 class MessagesController extends Controller
 {
@@ -16,7 +17,7 @@ class MessagesController extends Controller
     {
         $messages = Message::get();
 
-        return view('Messages.message', compact('messages'));
+        return view('Messages.index', compact('messages'));
         // return view('message', ['From' => 'Tyler', 'Message' => 'Wowowoww']);
     }
 
@@ -27,7 +28,7 @@ class MessagesController extends Controller
      */
     public function create()
     {
-        //
+        return view('Messages.create');
     }
 
     /**
@@ -38,7 +39,22 @@ class MessagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $message = request()->validate([
+            'Message' => ['required']
+        ]);
+        // dd(User::where('id', 1)->get()->first()->Name);
+        // dd(Message::all()->first()->Message);
+        $FromUser = User::where('id', auth()->id())->get()->first();
+
+        Message::create($message + [
+            'From' => $FromUser->name,
+            'From_user_id' => $FromUser->id,
+            'To_user_id' => 66,
+            'To' => 'palpatine',
+            'Read' => false
+        ]);
+
+        return redirect('/messages');
     }
 
     /**

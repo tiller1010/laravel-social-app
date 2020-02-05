@@ -15,6 +15,7 @@
                     @endif
 
                     You are logged in!
+                    <a href="/messages">Messages</a>
                 </div>
             </div>
         </div>

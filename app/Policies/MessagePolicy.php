@@ -53,7 +53,7 @@ class MessagePolicy
      */
     public function update(User $user, Message $message)
     {
-        return ($message->From == $user->name);
+        return ($message->From_user_id == $user->id || $message->To_user_id == $user->id);
     }
 
     /**

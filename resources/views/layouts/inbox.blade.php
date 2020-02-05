@@ -5,6 +5,6 @@
 </head>
 <body>
 	<h1>Inbox</h1>
-	@yield('message')
+	@yield('messages')
 </body>
 </html>

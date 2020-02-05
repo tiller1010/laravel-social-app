@@ -1,6 +1,6 @@
 @extends('layouts.inbox')
 
-@section('message')
+@section('messages')
 
 @foreach($messages as $m)
 	<div style="margin-bottom: 40px;">
@@ -14,5 +14,7 @@
 		<a href="messages/{{$m->id}}/edit">Edit</a>
 	</div>
 @endforeach
+
+<a href="/messages/create">Create new message</a>
 
 @endsection
