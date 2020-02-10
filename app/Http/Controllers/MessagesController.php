@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Message;
 use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class MessagesController extends Controller
 {
@@ -15,11 +17,15 @@ class MessagesController extends Controller
      */
     public function index()
     {
-        $user = User::where('id', auth()->id())->get()->first();
+        // $user = User::where('id', auth()->id())->get()->first();
+        $user = Auth::User();
 
-        // $messages = Message::where('From_user_id', $user->id)->get();
-        $messages = Message::get();
-        return view('Messages.index')->with(compact('messages'))->with(compact('user'));
+        $sentMessages = Message::where('From_user_id', $user->id)->get();
+        $recievedMessages = Message::where('To_user_id', $user->id)->get();
+        return view('Messages.index')
+            ->with(compact('sentMessages'))
+            ->with(compact('recievedMessages'))
+            ->with(compact('user'));
         // return view('message', ['From' => 'Tyler', 'Message' => 'Wowowoww']);
     }
 
@@ -42,21 +48,28 @@ class MessagesController extends Controller
     public function store(Request $request)
     {
         $message = request()->validate([
+            'To' => ['required'],
             'Message' => ['required']
         ]);
         // dd(User::where('id', 1)->get()->first()->Name);
         // dd(Message::all()->first()->Message);
-        $FromUser = User::where('id', auth()->id())->get()->first();
+        $FromUser = Auth::User();
+        // dd(request('To'));
+        // dd(User::where('name', request('To'))->get()->first());
+        $ToUser = User::where('name', request('To'))->get()->first();
 
-        Message::create($message + [
-            'From' => $FromUser->name,
-            'From_user_id' => $FromUser->id,
-            'To_user_id' => 66,
-            'To' => 'palpatine',
-            'Read' => false
-        ]);
+        if($ToUser){
+            Message::create($message + [
+                'From' => $FromUser->name,
+                'From_user_id' => $FromUser->id,
+                'To_user_id' => $ToUser->id,
+                'Read' => false
+            ]);
 
-        return redirect('/messages');
+            return redirect('/messages');
+        } else {
+            return Redirect::back()->withErrors([]);
+        }
     }
 
     /**
