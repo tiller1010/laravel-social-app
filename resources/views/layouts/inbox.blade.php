@@ -6,6 +6,9 @@
 </head>
 <body>
 	<h1>Inbox</h1>
-	@yield('messages')
+	<div id="app" class="container">
+		@yield('messages')
+	</div>
 </body>
+	<script src="{{ asset('js/app.js') }}"></script>
 </html>

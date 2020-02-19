@@ -2,6 +2,11 @@
 
 @section('messages')
 
+<conversation-component
+	:user="'{{ $user->name }}'"
+></conversation-component>
+
+<h2>Received Messages:</h2>
 @foreach($recievedMessages as $m)
 @if($user->can('view', $m))
 	<div style="margin-bottom: 40px;">
