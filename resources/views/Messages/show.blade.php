@@ -5,9 +5,8 @@
 <h1>Showing Conversation</h1>
 
 <a href="/messages">Go back</a>
-<p>{{$connectedUser}}</p>
 
-<h2>Received Messages:</h2>
+{{-- <h2>Received Messages:</h2> --}}
 {{-- @foreach($recievedMessages as $m)
 @if($user->can('view', $m))
 	<div style="margin-bottom: 40px;">
@@ -40,7 +39,11 @@
 <h2>All Messages:</h2>
 @foreach($allMessages as $m)
 @if($user->can('view', $m))
+	@if($sentMessages->contains($m))
+	<div style="margin-bottom: 40px; margin-left: 40px;">
+	@else
 	<div style="margin-bottom: 40px;">
+	@endif
 		<p>From: {{$m->From}}</p>
 		<p>Message: {{$m->Message}}</p>
 		@if($m->Read)

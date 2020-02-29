@@ -7,6 +7,7 @@ use App\Message;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Database\Eloquent\Collection;
 
 class MessagesController extends Controller
 {
@@ -20,8 +21,26 @@ class MessagesController extends Controller
         $user = Auth::User();
 
         if($user){
-            $sentMessages = Message::where('From_user_id', $user->id)->get();
-            $recievedMessages = Message::where('To_user_id', $user->id)->get();
+            $sentMessages = Message::where('From_user_id', $user->id)->get()->sortBy('created_at');
+            // Get most recent and unique to_user messages
+            $uniqueSentToUserMessage = new Collection;
+            foreach($sentMessages as $m){
+                if(!$uniqueSentToUserMessage->pluck('To_user_id')->contains($m->To_user_id)){
+                    $uniqueSentToUserMessage->push($m);
+                }
+            }
+            // dd($uniqueSentToUserMessage);
+
+            $recievedMessages = Message::where('To_user_id', $user->id)->get()->sortBy('created_at');
+            // Get most recent and unique from_user messages
+            $uniqueReceivedFromUserMessage = new Collection;
+            foreach($recievedMessages as $m){
+                if(!$uniqueReceivedFromUserMessage->pluck('From_user_id')->contains($m->From_user_id)){
+                    $uniqueReceivedFromUserMessage->push($m);
+                }
+            }
+            // dd($uniqueReceivedFromUserMessage);
+
             return view('Messages.index')
                 ->with(compact('sentMessages'))
                 ->with(compact('recievedMessages'))

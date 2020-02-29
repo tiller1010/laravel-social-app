@@ -24,6 +24,7 @@
 @if($user->can('view', $m))
 	<div style="margin-bottom: 40px;">
 		<p>From: {{$m->From}}</p>
+		<p>To: {{$m->To}}</p>
 		<p>Message: {{$m->Message}}</p>
 		@if($m->Read)
 			<p>Read</p>
