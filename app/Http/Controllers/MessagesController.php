@@ -92,9 +92,11 @@ class MessagesController extends Controller
             $recievedMessages = Message::where('To_user_id', $user->id)
                 ->where('From_user_id', $connectedUser)
                 ->get();
+            $allMessages = $sentMessages->merge($recievedMessages)->sortBy('created_at');
             return view('Messages.show')
                 ->with(compact('sentMessages'))
                 ->with(compact('recievedMessages'))
+                ->with(compact('allMessages'))
                 ->with(compact('connectedUser'))
                 ->with(compact('user'));
         }
