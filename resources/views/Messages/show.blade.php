@@ -55,9 +55,13 @@
 @endif
 @endforeach
 
-
-<conversation-component
-	:user="'{{ $user->name }}'"
-></conversation-component>
+<form action="/messages" method="POST">
+	@csrf
+	<conversation-component
+		:user="'{{ \App\User::where('id', $connectedUser)->first()->name }}'"
+	></conversation-component>
+	<input type="hidden" name="To" value="{{ \App\User::where('id', $connectedUser)->first()->name }}" />
+	<input type="submit" value="Send">
+</form>
 
 @endsection

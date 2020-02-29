@@ -104,7 +104,7 @@ class MessagesController extends Controller
                 'Read' => false
             ]);
 
-            return redirect('/messages');
+            return redirect('/messages/' . $ToUser->id);
         } else {
             return Redirect::back()->withErrors([]);
         }

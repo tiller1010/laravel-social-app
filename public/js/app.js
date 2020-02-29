@@ -1916,7 +1916,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -19537,15 +19536,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("p", [
-      _vm.typing
-        ? _c("span", [_vm._v(_vm._s(_vm.user) + " is typing")])
-        : _c("span", [_vm._v("Away")])
-    ]),
+  return _c("div", { staticClass: "form-group" }, [
+    _vm.typing
+      ? _c("div", [_vm._v("You are typing")])
+      : _c("div", [_vm._v(_vm._s(_vm.user) + " is waiting")]),
     _vm._v(" "),
-    _c("input", {
-      attrs: { type: "text", name: "message" },
+    _c("label", { attrs: { for: "message" } }, [_vm._v("Message:")]),
+    _vm._v(" "),
+    _c("textarea", {
+      staticClass: "form-control",
+      attrs: { name: "Message" },
       on: {
         input: function($event) {
           return _vm.isTyping()

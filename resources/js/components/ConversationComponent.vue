@@ -1,10 +1,9 @@
 <template>
-	<div>
-		<p>
-			<span v-if="typing">{{ user }} is typing</span>
-			<span v-else>Away</span>
-		</p>
-		<input v-on:input="isTyping()" type="text" name="message">
+	<div class="form-group">
+		<div v-if="typing">You are typing</div>
+		<div v-else>{{ user }} is waiting</div>
+		<label for="message">Message:</label>
+		<textarea v-on:input="isTyping()" name="Message" class="form-control" ></textarea>
 	</div>
 </template>
 <script>
