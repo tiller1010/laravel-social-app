@@ -21,29 +21,46 @@ class MessagesController extends Controller
         $user = Auth::User();
 
         if($user){
-            $sentMessages = Message::where('From_user_id', $user->id)->get()->sortBy('created_at');
+            $sentMessages = Message::where('From_user_id', $user->id)->get()->sortBy('created_at')->reverse();
             // Get most recent and unique to_user messages
-            $uniqueSentToUserMessage = new Collection;
+            $uniqueSentToUserMessages = new Collection;
             foreach($sentMessages as $m){
-                if(!$uniqueSentToUserMessage->pluck('To_user_id')->contains($m->To_user_id)){
-                    $uniqueSentToUserMessage->push($m);
+                if(!$uniqueSentToUserMessages->pluck('To_user_id')->contains($m->To_user_id)){
+                    $uniqueSentToUserMessages->push($m);
                 }
             }
-            // dd($uniqueSentToUserMessage);
+            // dd($uniqueSentToUserMessages->pluck('Message'));
 
-            $recievedMessages = Message::where('To_user_id', $user->id)->get()->sortBy('created_at');
+            $recievedMessages = Message::where('To_user_id', $user->id)->get()->sortBy('created_at')->reverse();
             // Get most recent and unique from_user messages
-            $uniqueReceivedFromUserMessage = new Collection;
+            $uniqueReceivedFromUserMessages = new Collection;
             foreach($recievedMessages as $m){
-                if(!$uniqueReceivedFromUserMessage->pluck('From_user_id')->contains($m->From_user_id)){
-                    $uniqueReceivedFromUserMessage->push($m);
+                if(!$uniqueReceivedFromUserMessages->pluck('From_user_id')->contains($m->From_user_id)){
+                    $uniqueReceivedFromUserMessages->push($m);
                 }
             }
-            // dd($uniqueReceivedFromUserMessage);
+            // dd($uniqueReceivedFromUserMessages->pluck('Message'));
+
+            // Add messages where connectedUsers created_at is newer
+            $mostRecentConversationMessages = new Collection;
+            $allRecents = $uniqueSentToUserMessages
+                ->merge($uniqueReceivedFromUserMessages)
+                ->sortBy('created_at')
+                ->reverse();
+            // dd($allRecents->pluck('Message'));
+            foreach($allRecents as $m){
+                if(!$mostRecentConversationMessages->pluck('From_user_id')->contains($m->To_user_id) ||
+                   !$mostRecentConversationMessages->pluck('To_user_id')->contains($m->From_user_id)
+                ){
+                    $mostRecentConversationMessages->push($m);
+                }
+            }
+            // dd($mostRecentConversationMessages->pluck('Message'));
 
             return view('Messages.index')
                 ->with(compact('sentMessages'))
                 ->with(compact('recievedMessages'))
+                ->with(compact('mostRecentConversationMessages'))
                 ->with(compact('user'));
         }
 
