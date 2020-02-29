@@ -20,7 +20,8 @@
 		methods: {
 			isTyping: function(){
 				let context = this;
-				setTimeout(function(){
+				clearTimeout(context.inactive);
+				context.inactive = setTimeout(function(){
 					context.typing = false;
 				}, 1200);
 				context.typing = true;

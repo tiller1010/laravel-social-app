@@ -11,11 +11,18 @@
 |
 */
 
-Route::resource('/messages', 'MessagesController');
-//
-// 	function () {
-//     return view('message', ['From' => 'Tyler', 'Message' => 'Wowowoww']);
-// });
+// Route::resource('/messages', 'MessagesController');
+
+Route::get('/messages', 'MessagesController@index');
+Route::get('/messages/create', 'MessagesController@create');
+// Route::get('messages/{project}', 'MessagesController@show');
+Route::post('/messages', 'MessagesController@store');
+Route::get('/messages/{project}/edit', 'MessagesController@edit');
+Route::patch('messages/{project}', 'MessagesController@update');
+Route::delete('messages/{project}', 'MessagesController@destroy');
+
+
+Route::get('/messages/{connectedUser}', 'MessagesController@show');
 
 Auth::routes();
 

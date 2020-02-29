@@ -17,16 +17,18 @@ class MessagesController extends Controller
      */
     public function index()
     {
-        // $user = User::where('id', auth()->id())->get()->first();
         $user = Auth::User();
 
-        $sentMessages = Message::where('From_user_id', $user->id)->get();
-        $recievedMessages = Message::where('To_user_id', $user->id)->get();
-        return view('Messages.index')
-            ->with(compact('sentMessages'))
-            ->with(compact('recievedMessages'))
-            ->with(compact('user'));
-        // return view('message', ['From' => 'Tyler', 'Message' => 'Wowowoww']);
+        if($user){
+            $sentMessages = Message::where('From_user_id', $user->id)->get();
+            $recievedMessages = Message::where('To_user_id', $user->id)->get();
+            return view('Messages.index')
+                ->with(compact('sentMessages'))
+                ->with(compact('recievedMessages'))
+                ->with(compact('user'));
+        }
+
+        return redirect('login');
     }
 
     /**
@@ -78,9 +80,26 @@ class MessagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $user = Auth::User();
+
+        if($user){
+            $connectedUser = $request->connectedUser;
+            $sentMessages = Message::where('From_user_id', $user->id)
+                ->where('To_user_id', $connectedUser)
+                ->get();
+            $recievedMessages = Message::where('To_user_id', $user->id)
+                ->where('From_user_id', $connectedUser)
+                ->get();
+            return view('Messages.show')
+                ->with(compact('sentMessages'))
+                ->with(compact('recievedMessages'))
+                ->with(compact('connectedUser'))
+                ->with(compact('user'));
+        }
+
+        return redirect('login');
     }
 
     /**

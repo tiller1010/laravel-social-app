@@ -2,6 +2,11 @@
 
 @section('messages')
 
+<h1>Showing Conversation</h1>
+
+<a href="/messages">Go back</a>
+<p>{{$connectedUser}}</p>
+
 <h2>Received Messages:</h2>
 @foreach($recievedMessages as $m)
 @if($user->can('view', $m))
@@ -13,8 +18,6 @@
 		@else
 			<p>Unread</p>
 		@endif
-		<a href="messages/{{$m->id}}/edit">Edit</a>
-		<a href="messages/{{$m->From_user_id}}">View</a>
 	</div>
 @endif
 @endforeach
@@ -30,12 +33,13 @@
 		@else
 			<p>Unread</p>
 		@endif
-		<a href="messages/{{$m->id}}/edit">Edit</a>
-		<a href="messages/{{$m->id}}">View</a>
 	</div>
 @endif
 @endforeach
 
-<a href="/messages/create">Create new message</a>
+
+<conversation-component
+	:user="'{{ $user->name }}'"
+></conversation-component>
 
 @endsection
