@@ -1,6 +1,6 @@
-@extends('layouts.inbox')
+@extends('layouts.app')
 
-@section('messages')
+@section('content')
 	<div>
 		{{$message->From}}
 		<form action="/messages/{{$message->id}}" method="POST">

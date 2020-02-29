@@ -1,6 +1,6 @@
-@extends('layouts.inbox')
+@extends('layouts.app')
 
-@section('messages')
+@section('content')
 
 {{-- <h2>Received Messages:</h2>
 @foreach($recievedMessages as $m)

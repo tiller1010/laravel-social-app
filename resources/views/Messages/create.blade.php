@@ -1,6 +1,6 @@
-@extends('layouts.inbox')
+@extends('layouts.app')
 
-@section('messages')
+@section('content')
 	<div>
 		<form action="/messages" method="POST">
 			@csrf
