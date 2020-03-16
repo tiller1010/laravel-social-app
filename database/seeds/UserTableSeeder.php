@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class MessageTableSeeder extends Seeder
+class UserTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class MessageTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Message::class, 100)->create();
+        factory(App\User::class, 20)->create();
     }
 }
