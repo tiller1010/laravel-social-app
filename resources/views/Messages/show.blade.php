@@ -6,43 +6,13 @@
 
 <a href="/messages">Go back</a>
 
-{{-- <h2>Received Messages:</h2> --}}
-{{-- @foreach($recievedMessages as $m)
-@if($user->can('view', $m))
-	<div style="margin-bottom: 40px;">
-		<p>From: {{$m->From}}</p>
-		<p>Message: {{$m->Message}}</p>
-		@if($m->Read)
-			<p>Read</p>
-		@else
-			<p>Unread</p>
-		@endif
-	</div>
-@endif
-@endforeach
-
-<h2>Sent Messages:</h2>
-@foreach($sentMessages as $m)
-@if($user->can('view', $m))
-	<div style="margin-bottom: 40px;">
-		<p>From: {{$m->From}}</p>
-		<p>Message: {{$m->Message}}</p>
-		@if($m->Read)
-			<p>Read</p>
-		@else
-			<p>Unread</p>
-		@endif
-	</div>
-@endif
-@endforeach --}}
-
 <h2>All Messages:</h2>
 @foreach($allMessages as $m)
 @if($user->can('view', $m))
 	@if($sentMessages->contains($m))
-	<div style="margin-bottom: 40px; margin-left: 40px;">
+	<div style="margin-bottom: 40px;" class="alert alert-dark sentMessage">
 	@else
-	<div style="margin-bottom: 40px;">
+	<div style="margin-bottom: 40px;" class="alert alert-info receivedMessage">
 	@endif
 		<p>From: {{$m->From}}</p>
 		<p>Message: {{$m->Message}}</p>

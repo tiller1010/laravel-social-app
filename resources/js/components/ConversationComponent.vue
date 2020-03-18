@@ -25,6 +25,9 @@
 				}, 1200);
 				context.typing = true;
 			}
+		},
+		mounted(){
+			window.scrollTo(0, document.body.offsetHeight);
 		}
 	}
 </script>

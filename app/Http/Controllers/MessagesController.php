@@ -29,7 +29,6 @@ class MessagesController extends Controller
                     $uniqueSentToUserMessages->push($m);
                 }
             }
-            // dd($uniqueSentToUserMessages->pluck('Message'));
 
             $recievedMessages = Message::where('To_user_id', $user->id)->get()->sortBy('created_at')->reverse();
             // Get most recent and unique from_user messages
@@ -39,7 +38,6 @@ class MessagesController extends Controller
                     $uniqueReceivedFromUserMessages->push($m);
                 }
             }
-            // dd($uniqueReceivedFromUserMessages->pluck('Message'));
 
             // Add messages where connectedUsers created_at is newer
             $mostRecentConversationMessages = new Collection;
@@ -47,7 +45,6 @@ class MessagesController extends Controller
                 ->merge($uniqueReceivedFromUserMessages)
                 ->sortBy('created_at')
                 ->reverse();
-            // dd($allRecents->pluck('Message'));
             foreach($allRecents as $m){
                 if(!$mostRecentConversationMessages->pluck('From_user_id')->contains($m->To_user_id) ||
                    !$mostRecentConversationMessages->pluck('To_user_id')->contains($m->From_user_id)
@@ -55,7 +52,6 @@ class MessagesController extends Controller
                     $mostRecentConversationMessages->push($m);
                 }
             }
-            // dd($mostRecentConversationMessages->pluck('Message'));
 
             return view('Messages.index')
                 ->with(compact('sentMessages'))
@@ -89,11 +85,8 @@ class MessagesController extends Controller
             'To' => ['required'],
             'Message' => ['required']
         ]);
-        // dd(User::where('id', 1)->get()->first()->Name);
-        // dd(Message::all()->first()->Message);
+
         $FromUser = Auth::User();
-        // dd(request('To'));
-        // dd(User::where('name', request('To'))->get()->first());
         $ToUser = User::where('name', request('To'))->get()->first();
 
         if($ToUser){
@@ -116,11 +109,12 @@ class MessagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show(Request $request, Message $message)
     {
         $user = Auth::User();
 
         if($user){
+
             $connectedUser = $request->connectedUser;
             $sentMessages = Message::where('From_user_id', $user->id)
                 ->where('To_user_id', $connectedUser)
@@ -128,6 +122,12 @@ class MessagesController extends Controller
             $recievedMessages = Message::where('To_user_id', $user->id)
                 ->where('From_user_id', $connectedUser)
                 ->get();
+
+            foreach($recievedMessages as $m){
+                $m->Read = 1;
+                $m->save();
+            }
+
             $allMessages = $sentMessages->merge($recievedMessages)->sortBy('created_at');
             return view('Messages.show')
                 ->with(compact('sentMessages'))

@@ -1932,6 +1932,9 @@ __webpack_require__.r(__webpack_exports__);
       }, 1200);
       context.typing = true;
     }
+  },
+  mounted: function mounted() {
+    window.scrollTo(0, document.body.offsetHeight);
   }
 });
 
