@@ -1,4 +1,13 @@
+import Echo from 'laravel-echo';
+
 window._ = require('lodash');
+
+window.Echo = new Echo({
+	broadcaster: 'pusher',
+	key: 'bec3540e3e7e40469c36',
+	cluster: 'us2',
+	encrypted: true
+});
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
