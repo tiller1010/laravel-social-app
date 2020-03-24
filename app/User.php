@@ -36,4 +36,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function activity()
+    {
+        return $this->hasMany('App\Activity')
+            ->with(['user', 'subject'])
+            ->latest();
+    }
+    
+    public function recordActivity($name, $related)
+    {
+        if (! method_exists($related, 'recordActivity')) {
+            throw new \Exception('..');
+        }
+
+        return $related->recordActivity($name);
+    }
 }

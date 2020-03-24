@@ -1,4 +1,5 @@
 import Echo from 'laravel-echo';
+import Pusher from "pusher-js";
 
 window._ = require('lodash');
 
@@ -8,6 +9,8 @@ window.Echo = new Echo({
 	cluster: 'us2',
 	encrypted: true
 });
+
+Pusher.logToConsole = true;
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

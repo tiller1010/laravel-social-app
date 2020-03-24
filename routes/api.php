@@ -16,3 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['middleware' => ['auth:api']], function() {
+	Route::post('messages/store', 'Api\MessageController@store');
+	// Route::get('tasks', 'Api\TaskController@index');
+	// Route::post('tasks/{task}/comments/store', 'Api\CommentController@store');
+	// Route::get('tasks/{task}/comments', 'Api\CommentController@index');
+	Route::get('activities', 'Api\ActivityController@index');
+});
