@@ -5,8 +5,8 @@
 			<p>Message: {{newMessage.Message}}</p>
 		</div>
 		<div class="form-group">
-			<div v-if="typing">You are typing</div>
-			<div v-else>{{ user }} is waiting</div>
+			<div style="color: #fff;" v-if="typing">You are typing</div>
+			<div style="color: #fff;" v-else>{{ user }} is waiting</div>
 			<label for="message">Message:</label>
 			<textarea v-on:input="isTyping()" name="Message" class="form-control" style="resize: none;"></textarea>
 		</div>

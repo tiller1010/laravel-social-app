@@ -29521,8 +29521,12 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
         _vm.typing
-          ? _c("div", [_vm._v("You are typing")])
-          : _c("div", [_vm._v(_vm._s(_vm.user) + " is waiting")]),
+          ? _c("div", { staticStyle: { color: "#fff" } }, [
+              _vm._v("You are typing")
+            ])
+          : _c("div", { staticStyle: { color: "#fff" } }, [
+              _vm._v(_vm._s(_vm.user) + " is waiting")
+            ]),
         _vm._v(" "),
         _c("label", { attrs: { for: "message" } }, [_vm._v("Message:")]),
         _vm._v(" "),
