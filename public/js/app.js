@@ -1924,17 +1924,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user', 'currentuser'],
   data: function data() {
     return {
       typing: false,
-      feed: {}
+      feed: {},
+      newMessagesExist: false
     };
   },
   created: function created() {
     this.getFeed();
     this.listenForActivity();
+    window.addEventListener('scroll', this.checkScroll);
   },
   methods: {
     isTyping: function isTyping() {
@@ -1961,6 +1964,15 @@ __webpack_require__.r(__webpack_exports__);
       //                 this.message = '';
       //             });
     },
+    scrollBottom: function scrollBottom() {
+      window.scrollTo(0, document.body.offsetHeight);
+      this.newMessagesExist = false;
+    },
+    checkScroll: function checkScroll() {
+      if (window.scrollY + 670 >= document.body.offsetHeight) {
+        this.newMessagesExist = false;
+      }
+    },
     listenForActivity: function listenForActivity() {
       var _this = this;
 
@@ -1972,6 +1984,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.feed[Object.keys(_this.feed).length] = e.message;
 
         _this.$forceUpdate();
+
+        _this.newMessagesExist = true;
       });
     }
   },
@@ -29500,9 +29514,7 @@ var render = function() {
           [
             _c("p", [_vm._v("From: " + _vm._s(newMessage.From))]),
             _vm._v(" "),
-            _c("p", [_vm._v("Message: " + _vm._s(newMessage.Message))]),
-            _vm._v(" "),
-            _c("p", [_vm._v("Read")])
+            _c("p", [_vm._v("Message: " + _vm._s(newMessage.Message))])
           ]
         )
       }),
@@ -29516,6 +29528,7 @@ var render = function() {
         _vm._v(" "),
         _c("textarea", {
           staticClass: "form-control",
+          staticStyle: { resize: "none" },
           attrs: { name: "Message" },
           on: {
             input: function($event) {
@@ -29523,7 +29536,35 @@ var render = function() {
             }
           }
         })
-      ])
+      ]),
+      _vm._v(" "),
+      _vm.newMessagesExist
+        ? _c(
+            "div",
+            {
+              staticClass: "newMessagesButton",
+              on: {
+                scroll: function($event) {
+                  return _vm.checkScroll()
+                }
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "btn btn-success",
+                  on: {
+                    click: function($event) {
+                      return _vm.scrollBottom()
+                    }
+                  }
+                },
+                [_vm._v("New Messages")]
+              )
+            ]
+          )
+        : _vm._e()
     ],
     2
   )

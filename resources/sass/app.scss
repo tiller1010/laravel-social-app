@@ -7,6 +7,23 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+body{
+	background-color: #28262b;
+	padding-top: 60px;
+}
+h1, h2, label{
+	color: #fff;
+}
+
+nav.navbar{
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 99;
+    background-color: #f7f7f7;
+}
+
 .navbar-laravel {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -17,4 +34,18 @@
 }
 .receivedMessage{
 	margin-right: 20%;
+}
+.newMessagesButton{
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 100px;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal-content, .card-body{
+	background-color: #28262b;
 }

@@ -3,14 +3,15 @@
 		<div v-for="newMessage in feed" style="margin-bottom: 40px;" class="alert alert-info receivedMessage">
 			<p>From: {{newMessage.From}}</p>
 			<p>Message: {{newMessage.Message}}</p>
-			<p>Read</p>
 		</div>
 		<div class="form-group">
 			<div v-if="typing">You are typing</div>
 			<div v-else>{{ user }} is waiting</div>
 			<label for="message">Message:</label>
-			<textarea v-on:input="isTyping()" name="Message" class="form-control" ></textarea>
-
+			<textarea v-on:input="isTyping()" name="Message" class="form-control" style="resize: none;"></textarea>
+		</div>
+		<div v-on:scroll="checkScroll()" v-if="newMessagesExist" class="newMessagesButton">
+			<div class="btn btn-success" v-on:click="scrollBottom()">New Messages</div>
 		</div>
 	</div>
 </template>
@@ -23,12 +24,14 @@
 		data(){
 			return {
 				typing: false,
-				feed: {}
+				feed: {},
+				newMessagesExist: false
 			}
 		},
         created() {
             this.getFeed();
             this.listenForActivity();
+            window.addEventListener('scroll', this.checkScroll);
         },
 		methods: {
 			isTyping: function(){
@@ -57,6 +60,15 @@
     //                 this.message = '';
     //             });
             },
+            scrollBottom(){
+				window.scrollTo(0, document.body.offsetHeight);
+				this.newMessagesExist = false;
+            },
+            checkScroll(){
+            	if(window.scrollY + 670 >= document.body.offsetHeight){
+					this.newMessagesExist = false;
+				}
+            },
             listenForActivity() {
                 // Echo.private('activity.' + this.currentuser.id)
                 //     .listen('ActivityLogged', (e) => {
@@ -66,6 +78,7 @@
                     .listen('MessageSent', (e) => {
                         this.feed[Object.keys(this.feed).length] = e.message;
                         this.$forceUpdate();
+                        this.newMessagesExist = true;
                     });
             }
 		},

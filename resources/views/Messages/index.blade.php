@@ -5,7 +5,7 @@
 <h2>All Messages:</h2>
 @foreach($mostRecentConversationMessages as $m)
 @if($user->can('view', $m))
-	<div style="margin-bottom: 40px;">
+	<div style="margin-bottom: 40px;" class="alert alert-dark">
 		<p>From: {{$m->From}}</p>
 		<p>To: {{$m->To}}</p>
 		<p>Message: {{$m->Message}}</p>
@@ -23,6 +23,6 @@
 @endif
 @endforeach
 
-<a href="/messages/create">Create new message</a>
+@include('Messages.create')
 
 @endsection

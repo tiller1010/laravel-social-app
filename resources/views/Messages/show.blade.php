@@ -16,11 +16,6 @@
 	@endif
 		<p>From: {{$m->From}}</p>
 		<p>Message: {{$m->Message}}</p>
-		@if($m->Read)
-			<p>Read</p>
-		@else
-			<p>Unread</p>
-		@endif
 	</div>
 @endif
 @endforeach
@@ -32,7 +27,7 @@
 		:currentuser="{{ $user }}"
 	></conversation-component>
 	<input type="hidden" name="To" value="{{ \App\User::where('id', $connectedUser)->first()->name }}" />
-	<input type="submit" value="Send">
+	<input type="submit" class="btn btn-primary" value="Send">
 </form>
 
 @endsection
