@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Database\Eloquent\Collection;
+use App\Events\MessageSent;
 
 class MessagesController extends Controller
 {
@@ -90,12 +91,14 @@ class MessagesController extends Controller
         $ToUser = User::where('name', request('To'))->get()->first();
 
         if($ToUser){
-            Message::create($message + [
+            $sentMessage = Message::create($message + [
                 'From' => $FromUser->name,
                 'From_user_id' => $FromUser->id,
                 'To_user_id' => $ToUser->id,
                 'Read' => false
             ]);
+
+            broadcast(new MessageSent($sentMessage));
 
             return redirect('/messages/' . $ToUser->id);
         } else {

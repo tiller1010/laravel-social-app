@@ -38,12 +38,12 @@
 				context.typing = true;
 			},
 			getFeed() {
-                let context = this;
-                return axios.get('/api/activities?api_token=bec3540e3e7e40469c36', {})
-                .then(function(response) {
-                	// console.log('getFeed response', response)
-                    context.feed = response.data.data;
-                });
+                // let context = this;
+                // return axios.get('/api/activities?api_token=bec3540e3e7e40469c36', {})
+                // .then(function(response) {
+                // 	// console.log('getFeed response', response)
+                //     context.feed = response.data.data;
+                // });
             },
             updateFeed(messageID) {
 				// axios.post('/api/messages/'+ messageID +'/comments/store?api_token=bec3540e3e7e40469c36', {
@@ -56,8 +56,12 @@
     //             });
             },
             listenForActivity() {
-                Echo.private('activity.' + this.currentuser.id)
-                    .listen('ActivityLogged', (e) => {
+                // Echo.private('activity.' + this.currentuser.id)
+                //     .listen('ActivityLogged', (e) => {
+                //         this.feed[Object.keys(this.feed).length] = e.data;
+                //     });
+                Echo.private('message.' + this.currentuser.id)
+                    .listen('MessageSent', (e) => {
                         this.feed[Object.keys(this.feed).length] = e.data;
                     });
             }

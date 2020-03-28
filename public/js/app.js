@@ -1943,12 +1943,12 @@ __webpack_require__.r(__webpack_exports__);
       }, 1200);
       context.typing = true;
     },
-    getFeed: function getFeed() {
-      var context = this;
-      return axios.get('/api/activities?api_token=bec3540e3e7e40469c36', {}).then(function (response) {
-        // console.log('getFeed response', response)
-        context.feed = response.data.data;
-      });
+    getFeed: function getFeed() {// let context = this;
+      // return axios.get('/api/activities?api_token=bec3540e3e7e40469c36', {})
+      // .then(function(response) {
+      // 	// console.log('getFeed response', response)
+      //     context.feed = response.data.data;
+      // });
     },
     updateFeed: function updateFeed(messageID) {// axios.post('/api/messages/'+ messageID +'/comments/store?api_token=bec3540e3e7e40469c36', {
       //     message: this.message
@@ -1962,7 +1962,11 @@ __webpack_require__.r(__webpack_exports__);
     listenForActivity: function listenForActivity() {
       var _this = this;
 
-      Echo["private"]('activity.' + this.currentuser.id).listen('ActivityLogged', function (e) {
+      // Echo.private('activity.' + this.currentuser.id)
+      //     .listen('ActivityLogged', (e) => {
+      //         this.feed[Object.keys(this.feed).length] = e.data;
+      //     });
+      Echo["private"]('message.' + this.currentuser.id).listen('MessageSent', function (e) {
         _this.feed[Object.keys(_this.feed).length] = e.data;
       });
     }

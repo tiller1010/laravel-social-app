@@ -12,7 +12,7 @@ class ActivityTransformer extends TransformerAbstract
 		return [
 			"description" => call_user_func_array([$this, $activity->name], [$activity]),
 			"lapse" => $activity->created_at->diffForHumans(),
-			"user" => $activity->user,
+			"user" => \App\User::find($activity->user_id)
 		];
 	}
 
