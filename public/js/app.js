@@ -1922,6 +1922,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user', 'currentuser'],
   data: function data() {
@@ -1967,7 +1969,9 @@ __webpack_require__.r(__webpack_exports__);
       //         this.feed[Object.keys(this.feed).length] = e.data;
       //     });
       Echo["private"]('message.' + this.currentuser.id).listen('MessageSent', function (e) {
-        _this.feed[Object.keys(_this.feed).length] = e.data;
+        _this.feed[Object.keys(_this.feed).length] = e.message;
+
+        _this.$forceUpdate();
       });
     }
   },
@@ -29483,34 +29487,46 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "form-group" }, [
-    _vm.typing
-      ? _c("div", [_vm._v("You are typing")])
-      : _c("div", [_vm._v(_vm._s(_vm.user) + " is waiting")]),
-    _vm._v(" "),
-    _c("label", { attrs: { for: "message" } }, [_vm._v("Message:")]),
-    _vm._v(" "),
-    _c("textarea", {
-      staticClass: "form-control",
-      attrs: { name: "Message" },
-      on: {
-        input: function($event) {
-          return _vm.isTyping()
-        }
-      }
-    }),
-    _vm._v(" "),
-    _c(
-      "ul",
-      { staticClass: "list-group" },
-      _vm._l(_vm.feed, function(item) {
-        return _c("li", { staticClass: "list-group-item" }, [
-          _vm._v("\n                " + _vm._s(item) + "  \n            ")
-        ])
+  return _c(
+    "div",
+    [
+      _vm._l(_vm.feed, function(newMessage) {
+        return _c(
+          "div",
+          {
+            staticClass: "alert alert-info receivedMessage",
+            staticStyle: { "margin-bottom": "40px" }
+          },
+          [
+            _c("p", [_vm._v("From: " + _vm._s(newMessage.From))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Message: " + _vm._s(newMessage.Message))]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Read")])
+          ]
+        )
       }),
-      0
-    )
-  ])
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _vm.typing
+          ? _c("div", [_vm._v("You are typing")])
+          : _c("div", [_vm._v(_vm._s(_vm.user) + " is waiting")]),
+        _vm._v(" "),
+        _c("label", { attrs: { for: "message" } }, [_vm._v("Message:")]),
+        _vm._v(" "),
+        _c("textarea", {
+          staticClass: "form-control",
+          attrs: { name: "Message" },
+          on: {
+            input: function($event) {
+              return _vm.isTyping()
+            }
+          }
+        })
+      ])
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

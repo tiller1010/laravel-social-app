@@ -1,15 +1,17 @@
 <template>
-	<div class="form-group">
-		<div v-if="typing">You are typing</div>
-		<div v-else>{{ user }} is waiting</div>
-		<label for="message">Message:</label>
-		<textarea v-on:input="isTyping()" name="Message" class="form-control" ></textarea>
+	<div>
+		<div v-for="newMessage in feed" style="margin-bottom: 40px;" class="alert alert-info receivedMessage">
+			<p>From: {{newMessage.From}}</p>
+			<p>Message: {{newMessage.Message}}</p>
+			<p>Read</p>
+		</div>
+		<div class="form-group">
+			<div v-if="typing">You are typing</div>
+			<div v-else>{{ user }} is waiting</div>
+			<label for="message">Message:</label>
+			<textarea v-on:input="isTyping()" name="Message" class="form-control" ></textarea>
 
-		<ul class="list-group">
-            <li class="list-group-item" v-for="item in feed">
-                {{ item }}  
-            </li>
-        </ul>
+		</div>
 	</div>
 </template>
 <script>
@@ -62,7 +64,8 @@
                 //     });
                 Echo.private('message.' + this.currentuser.id)
                     .listen('MessageSent', (e) => {
-                        this.feed[Object.keys(this.feed).length] = e.data;
+                        this.feed[Object.keys(this.feed).length] = e.message;
+                        this.$forceUpdate();
                     });
             }
 		},
