@@ -10933,3 +10933,26 @@ nav.navbar {
   background-color: #28262b;
 }
 
+.fixed-input {
+  position: fixed;
+  bottom: 0;
+}
+
+.fixed-input.form-group {
+  width: 90%;
+  left: 0;
+  margin-bottom: 0;
+}
+
+.fixed-input.btn {
+  right: 0;
+  width: 10%;
+  height: 80px;
+}
+
+input[type=text],
+input[type=number],
+textarea {
+  font-size: 17px !important;
+}
+

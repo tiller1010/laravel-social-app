@@ -4,7 +4,7 @@
 			<p>From: {{newMessage.From}}</p>
 			<p>Message: {{newMessage.Message}}</p>
 		</div>
-		<div class="form-group">
+		<div class="fixed-input form-group">
 			<div style="color: #fff;" v-if="typing">You are typing</div>
 			<div style="color: #fff;" v-else>{{ user }} is waiting</div>
 			<label for="message">Message:</label>

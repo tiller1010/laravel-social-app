@@ -29519,7 +29519,7 @@ var render = function() {
         )
       }),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "fixed-input form-group" }, [
         _vm.typing
           ? _c("div", { staticStyle: { color: "#fff" } }, [
               _vm._v("You are typing")
