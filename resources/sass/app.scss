@@ -14,6 +14,9 @@ body{
 h1, h2, label{
 	color: #fff;
 }
+.modal-backdrop{
+	display: none;
+}
 
 nav.navbar{
 	position: fixed;
@@ -28,6 +31,11 @@ nav.navbar{
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+
+.back-button{
+	z-index: 2;
+}
+
 
 .sentMessage{
 	margin-left: 20%;
@@ -50,18 +58,22 @@ nav.navbar{
 	background-color: #28262b;
 }
 
-.fixed-input{
+.conversation-form{
 	position: fixed;
 	bottom: 0;
-	&.form-group{
-		width: 90%;
-		left: 0;
+	display: flex;
+}
+.fixed-input{
+	width: 90%;
+	.form-group{
 		margin-bottom: 0;
 	}
 	&.btn{
-		right: 0;
-		width: 10%;
+		width: 70px;
 		height: 80px;
+		bottom: 0;
+		position: absolute;
+		right: 30px;
 	}
 }
 
@@ -69,4 +81,10 @@ input[type='text'],
 input[type='number'],
 textarea {
   font-size: 17px !important;
+}
+
+@media only screen and (max-width: 420){
+	.fixed-input.btn{
+		height: 68px;
+	}
 }

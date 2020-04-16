@@ -15,9 +15,9 @@
 			<p>Unread</p>
 		@endif
 		@if($user->id === $m->From_user_id)
-		<a href="messages/{{$m->To_user_id}}">View</a>
+		<a class="btn btn-primary" href="messages/{{$m->To_user_id}}">View</a>
 		@else
-		<a href="messages/{{$m->From_user_id}}">View</a>
+		<a class="btn btn-primary" href="messages/{{$m->From_user_id}}">View</a>
 		@endif
 	</div>
 @endif

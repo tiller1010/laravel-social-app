@@ -10895,6 +10895,10 @@ label {
   color: #fff;
 }
 
+.modal-backdrop {
+  display: none;
+}
+
 nav.navbar {
   position: fixed;
   width: 100%;
@@ -10907,6 +10911,10 @@ nav.navbar {
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.back-button {
+  z-index: 2;
 }
 
 .sentMessage {
@@ -10933,26 +10941,37 @@ nav.navbar {
   background-color: #28262b;
 }
 
-.fixed-input {
+.conversation-form {
   position: fixed;
   bottom: 0;
+  display: flex;
 }
 
-.fixed-input.form-group {
+.fixed-input {
   width: 90%;
-  left: 0;
+}
+
+.fixed-input .form-group {
   margin-bottom: 0;
 }
 
 .fixed-input.btn {
-  right: 0;
-  width: 10%;
+  width: 70px;
   height: 80px;
+  bottom: 0;
+  position: absolute;
+  right: 30px;
 }
 
 input[type=text],
 input[type=number],
 textarea {
   font-size: 17px !important;
+}
+
+@media only screen and (max-width: 420) {
+  .fixed-input.btn {
+    height: 68px;
+  }
 }
 

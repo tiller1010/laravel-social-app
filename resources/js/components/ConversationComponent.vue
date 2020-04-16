@@ -1,10 +1,10 @@
 <template>
-	<div>
+	<div class="fixed-input">
 		<div v-for="newMessage in feed" style="margin-bottom: 40px;" class="alert alert-info receivedMessage">
 			<p>From: {{newMessage.From}}</p>
 			<p>Message: {{newMessage.Message}}</p>
 		</div>
-		<div class="fixed-input form-group">
+		<div class="form-group">
 			<div style="color: #fff;" v-if="typing">You are typing</div>
 			<div style="color: #fff;" v-else>{{ user }} is waiting</div>
 			<label for="message">Message:</label>
