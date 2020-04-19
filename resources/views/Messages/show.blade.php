@@ -31,14 +31,13 @@
 @endif
 @endforeach
 
-<form class="conversation-form container" action="/messages" method="POST">
+<form class="conversation-form" action="/messages" method="POST">
 	@csrf
 	<conversation-component
 		:user="'{{ \App\User::where('id', $connectedUser)->first()->name }}'"
 		:currentuser="{{ $user }}"
 	></conversation-component>
 	<input type="hidden" name="To" value="{{ \App\User::where('id', $connectedUser)->first()->name }}" />
-	<input type="submit" class="fixed-input btn btn-primary" value="Send">
 </form>
 
 <div style="padding: 40px"></div>

@@ -1926,6 +1926,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user', 'currentuser'],
   data: function data() {
@@ -29522,26 +29525,33 @@ var render = function() {
         ])
       }),
       _vm._v(" "),
-      _c("div", { staticClass: "fixed-input form-group" }, [
-        _vm.typing
-          ? _c("div", { staticStyle: { color: "#fff" } }, [
-              _vm._v("You are typing")
-            ])
-          : _c("div", { staticStyle: { color: "#fff" } }, [
-              _vm._v(_vm._s(_vm.user) + " is waiting")
-            ]),
-        _vm._v(" "),
-        _c("label", { attrs: { for: "message" } }, [_vm._v("Message:")]),
-        _vm._v(" "),
-        _c("textarea", {
-          staticClass: "form-control",
-          staticStyle: { resize: "none" },
-          attrs: { name: "Message" },
-          on: {
-            input: function($event) {
-              return _vm.isTyping()
+      _vm.typing
+        ? _c("div", { staticClass: "py-3", staticStyle: { color: "#fff" } }, [
+            _vm._v("You are typing")
+          ])
+        : _c("div", { staticClass: "py-3", staticStyle: { color: "#fff" } }, [
+            _vm._v(_vm._s(_vm.user) + " is waiting")
+          ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "d-flex fixed-input" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "message" } }, [_vm._v("Message:")]),
+          _vm._v(" "),
+          _c("textarea", {
+            staticClass: "form-control",
+            staticStyle: { resize: "none" },
+            attrs: { name: "Message" },
+            on: {
+              input: function($event) {
+                return _vm.isTyping()
+              }
             }
-          }
+          })
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "btn btn-primary",
+          attrs: { type: "submit", value: "Send" }
         })
       ]),
       _vm._v(" "),

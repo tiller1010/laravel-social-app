@@ -5,11 +5,14 @@
 				<p>{{newMessage.Message}}</p>
 			</div>
 		</div>
-		<div class="fixed-input form-group">
-			<div style="color: #fff;" v-if="typing">You are typing</div>
-			<div style="color: #fff;" v-else>{{ user }} is waiting</div>
-			<label for="message">Message:</label>
-			<textarea v-on:input="isTyping()" name="Message" class="form-control" style="resize: none;"></textarea>
+		<div class="py-3" style="color: #fff;" v-if="typing">You are typing</div>
+		<div class="py-3" style="color: #fff;" v-else>{{ user }} is waiting</div>
+		<div class="d-flex fixed-input">
+			<div class="form-group">
+				<label for="message">Message:</label>
+				<textarea v-on:input="isTyping()" name="Message" class="form-control" style="resize: none;"></textarea>
+			</div>
+			<input type="submit" class="btn btn-primary" value="Send">
 		</div>
 		<div v-on:scroll="checkScroll()" v-if="newMessagesExist" class="newMessagesButton">
 			<div class="btn btn-success" v-on:click="scrollBottom()">New Messages</div>

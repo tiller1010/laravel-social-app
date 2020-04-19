@@ -10941,25 +10941,27 @@ nav.navbar {
   background-color: #28262b;
 }
 
+.conversation-form {
+  position: relative;
+}
+
 .fixed-input {
   position: fixed;
   bottom: 0;
-  width: 80%;
+  align-items: flex-end;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.fixed-input.form-group {
+.fixed-input .form-group {
+  width: 80%;
   margin-bottom: 0;
 }
 
-.fixed-input.form-group textarea {
-  padding-right: 100px;
-}
-
-.fixed-input.btn {
-  width: 70px;
+.fixed-input .btn {
+  width: 20%;
   height: 80px;
-  bottom: 0;
-  right: 30px;
 }
 
 input[type=text],
@@ -10969,7 +10971,7 @@ textarea {
 }
 
 @media only screen and (max-width: 420px) {
-  .fixed-input.btn {
+  .fixed-input .btn {
     height: 68px;
   }
 }
