@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="back-button position-fixed">
+<div class="back-button position-fixed ">
 	<div class="bg-primary px-3 py-1">
 		<h3 class="text-white my-0">{{ \App\User::where('id', $connectedUser)->first()->name }}</h3>
 	</div>
@@ -15,6 +15,9 @@
 	</a>
 </div>
 
+<div class="container">
+	<div class="p-5"></div>
+</div>
 
 @foreach($allMessages as $m)
 @if($user->can('view', $m))
@@ -23,7 +26,7 @@
 	@else
 	<div style="margin-bottom: 40px;" class="alert alert-info receivedMessage">
 	@endif
-		<p>Message: {{$m->Message}}</p>
+		<p>{{$m->Message}}</p>
 	</div>
 @endif
 @endforeach

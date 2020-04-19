@@ -1925,6 +1925,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user', 'currentuser'],
   data: function data() {
@@ -1985,7 +1986,9 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$forceUpdate();
 
-        _this.newMessagesExist = true;
+        if (e.message.From == _this.user) {
+          _this.newMessagesExist = true;
+        }
       });
     }
   },
@@ -29503,24 +29506,23 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "fixed-input" },
     [
       _vm._l(_vm.feed, function(newMessage) {
-        return _c(
-          "div",
-          {
-            staticClass: "alert alert-info receivedMessage",
-            staticStyle: { "margin-bottom": "40px" }
-          },
-          [
-            _c("p", [_vm._v("From: " + _vm._s(newMessage.From))]),
-            _vm._v(" "),
-            _c("p", [_vm._v("Message: " + _vm._s(newMessage.Message))])
-          ]
-        )
+        return _c("div", [
+          newMessage.From == _vm.user
+            ? _c(
+                "div",
+                {
+                  staticClass: "alert alert-info receivedMessage",
+                  staticStyle: { "margin-bottom": "40px" }
+                },
+                [_c("p", [_vm._v(_vm._s(newMessage.Message))])]
+              )
+            : _vm._e()
+        ])
       }),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "fixed-input form-group" }, [
         _vm.typing
           ? _c("div", { staticStyle: { color: "#fff" } }, [
               _vm._v("You are typing")

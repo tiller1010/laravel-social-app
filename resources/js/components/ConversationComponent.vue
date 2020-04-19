@@ -1,10 +1,11 @@
 <template>
-	<div class="fixed-input">
-		<div v-for="newMessage in feed" style="margin-bottom: 40px;" class="alert alert-info receivedMessage">
-			<p>From: {{newMessage.From}}</p>
-			<p>Message: {{newMessage.Message}}</p>
+	<div>
+		<div v-for="newMessage in feed">
+			<div v-if="newMessage.From == user" style="margin-bottom: 40px;" class="alert alert-info receivedMessage">
+				<p>{{newMessage.Message}}</p>
+			</div>
 		</div>
-		<div class="form-group">
+		<div class="fixed-input form-group">
 			<div style="color: #fff;" v-if="typing">You are typing</div>
 			<div style="color: #fff;" v-else>{{ user }} is waiting</div>
 			<label for="message">Message:</label>
@@ -78,7 +79,9 @@
                     .listen('MessageSent', (e) => {
                         this.feed[Object.keys(this.feed).length] = e.message;
                         this.$forceUpdate();
-                        this.newMessagesExist = true;
+                        if(e.message.From == this.user){
+	                        this.newMessagesExist = true;
+	                    }
                     });
             }
 		},

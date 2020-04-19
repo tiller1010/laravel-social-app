@@ -10927,7 +10927,7 @@ nav.navbar {
 
 .newMessagesButton {
   position: fixed;
-  bottom: 0;
+  bottom: 100px;
   width: 100%;
   height: 100px;
   left: 0;
@@ -10941,25 +10941,24 @@ nav.navbar {
   background-color: #28262b;
 }
 
-.conversation-form {
+.fixed-input {
   position: fixed;
   bottom: 0;
-  display: flex;
+  width: 80%;
 }
 
-.fixed-input {
-  width: 90%;
-}
-
-.fixed-input .form-group {
+.fixed-input.form-group {
   margin-bottom: 0;
+}
+
+.fixed-input.form-group textarea {
+  padding-right: 100px;
 }
 
 .fixed-input.btn {
   width: 70px;
   height: 80px;
   bottom: 0;
-  position: absolute;
   right: 30px;
 }
 
