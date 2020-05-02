@@ -19,17 +19,19 @@
 	<div class="p-5"></div>
 </div>
 
-@foreach($allMessages as $m)
-@if($user->can('view', $m))
-	@if($sentMessages->contains($m))
-	<div style="margin-bottom: 40px;" class="alert alert-dark sentMessage">
-	@else
-	<div style="margin-bottom: 40px;" class="alert alert-info receivedMessage">
+<div class="conversation">
+	@foreach($allMessages as $m)
+	@if($user->can('view', $m))
+		@if($sentMessages->contains($m))
+		<div style="margin-bottom: 40px;" class="alert alert-dark sentMessage">
+		@else
+		<div style="margin-bottom: 40px;" class="alert alert-info receivedMessage">
+		@endif
+			<p>{{$m->Message}}</p>
+		</div>
 	@endif
-		<p>{{$m->Message}}</p>
-	</div>
-@endif
-@endforeach
+	@endforeach
+</div>
 
 <form class="conversation-form" action="/messages" method="POST">
 	@csrf

@@ -5,8 +5,8 @@
 				<p>{{newMessage.Message}}</p>
 			</div>
 		</div>
-		<div class="py-3" style="color: #fff;" v-if="typing">You are typing</div>
-		<div class="py-3" style="color: #fff;" v-else>{{ user }} is waiting</div>
+		<div class="py-3 typing-status" v-if="typing">You are typing</div>
+		<div class="py-3 typing-status" v-else>{{ user }} is waiting</div>
 		<div class="d-flex fixed-input">
 			<div class="form-group">
 				<label for="message">Message:</label>

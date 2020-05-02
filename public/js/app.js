@@ -29526,10 +29526,10 @@ var render = function() {
       }),
       _vm._v(" "),
       _vm.typing
-        ? _c("div", { staticClass: "py-3", staticStyle: { color: "#fff" } }, [
+        ? _c("div", { staticClass: "py-3 typing-status" }, [
             _vm._v("You are typing")
           ])
-        : _c("div", { staticClass: "py-3", staticStyle: { color: "#fff" } }, [
+        : _c("div", { staticClass: "py-3 typing-status" }, [
             _vm._v(_vm._s(_vm.user) + " is waiting")
           ]),
       _vm._v(" "),

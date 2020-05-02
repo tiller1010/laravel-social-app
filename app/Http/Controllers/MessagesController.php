@@ -91,6 +91,15 @@ class MessagesController extends Controller
         $ToUser = User::where('name', request('To'))->get()->first();
 
         if($ToUser){
+            // To respond to a message you must see it, set all received to read
+            $recievedMessages = Message::where('To_user_id', $ToUser->id)
+                ->where('From_user_id', $FromUser->id)
+                ->get();
+            foreach($recievedMessages as $m){
+                $m->Read = 1;
+                $m->save();
+            }
+
             $sentMessage = Message::create($message + [
                 'From' => $FromUser->name,
                 'From_user_id' => $FromUser->id,

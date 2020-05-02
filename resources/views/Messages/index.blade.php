@@ -2,13 +2,19 @@
 
 @section('content')
 
-<h2>All Messages:</h2>
+<div class="position-sticky py-1 message-heading">
+	<h2>All Messages:</h2>
+</div>
 @foreach($mostRecentConversationMessages as $m)
 @if($user->can('view', $m))
+	@if($m->From === auth()->user()->name)
 	<div style="margin-bottom: 40px;" class="alert alert-dark">
-		<p>From: {{$m->From}}</p>
-		<p>To: {{$m->To}}</p>
-		<p>Message: {{$m->Message}}</p>
+		<h4>{{$m->To}}</h4>
+	@else
+	<div style="margin-bottom: 40px;" class="alert alert-info">
+		<h4>{{$m->From}}</h4>
+	@endif
+		<p>{{$m->Message}}</p>
 		@if($m->Read)
 			<p>Read</p>
 		@else

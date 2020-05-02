@@ -32,16 +32,37 @@ nav.navbar{
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+.message-heading{
+	top: 55px;
+	background-color: #28262b;
+	z-index: 2;
+	h2{
+		margin-bottom: 0;
+	}
+}
+
 .back-button{
 	z-index: 2;
 }
 
-
+.conversation{
+	max-width: 700px;
+	margin: 0 auto;
+}
 .sentMessage{
-	margin-left: 20%;
+	margin-left: auto;
+	max-width: 80%;
+	width: max-content;
 }
 .receivedMessage{
-	margin-right: 20%;
+	margin-right: auto;
+	max-width: 80%;
+	width: max-content;
+}
+.typing-status{
+	position: fixed;
+	bottom: 100px;
+	color: #fff;
 }
 .newMessagesButton{
 	position: fixed;
