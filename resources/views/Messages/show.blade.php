@@ -37,6 +37,7 @@
 	@csrf
 	<conversation-component
 		:user="'{{ \App\User::where('id', $connectedUser)->first()->name }}'"
+		:userID="'{{ \App\User::find($connectedUser)->id }}'"
 		:currentuser="{{ $user }}"
 	></conversation-component>
 	<input type="hidden" name="To" value="{{ \App\User::where('id', $connectedUser)->first()->name }}" />

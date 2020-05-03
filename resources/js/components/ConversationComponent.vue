@@ -23,6 +23,7 @@
 	export default {
 		props: [
 			'user',
+			'userID',
 			'currentuser'
 		],
 		data(){
@@ -86,10 +87,19 @@
 	                        this.newMessagesExist = true;
 	                    }
                     });
+
+                var presenceChannel = Echo.join('user-present.' + this.userID);
+                if(presenceChannel.members){
+	                var presentUser = presenceChannel.members.get(this.userID);
+	                console.log(presentUser);
+	            }
             }
 		},
 		mounted(){
 			window.scrollTo(0, document.body.offsetHeight);
+		},
+		destroyed(){
+			Echo.leaveChannel('presence-user-present');
 		}
 	}
 </script>

@@ -1930,7 +1930,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user', 'currentuser'],
+  props: ['user', 'userID', 'currentuser'],
   data: function data() {
     return {
       typing: false,
@@ -1993,10 +1993,19 @@ __webpack_require__.r(__webpack_exports__);
           _this.newMessagesExist = true;
         }
       });
+      var presenceChannel = Echo.join('user-present.' + this.userID);
+
+      if (presenceChannel.members) {
+        var presentUser = presenceChannel.members.get(this.userID);
+        console.log(presentUser);
+      }
     }
   },
   mounted: function mounted() {
     window.scrollTo(0, document.body.offsetHeight);
+  },
+  destroyed: function destroyed() {
+    Echo.leaveChannel('presence-user-present');
   }
 });
 

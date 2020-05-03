@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Database\Eloquent\Collection;
 use App\Events\MessageSent;
+use App\Events\UserPresent;
 
 class MessagesController extends Controller
 {
@@ -141,6 +142,9 @@ class MessagesController extends Controller
             }
 
             $allMessages = $sentMessages->merge($recievedMessages)->sortBy('created_at');
+
+            broadcast(new UserPresent(User::find($connectedUser)));
+
             return view('Messages.show')
                 ->with(compact('sentMessages'))
                 ->with(compact('recievedMessages'))
