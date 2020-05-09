@@ -24,8 +24,11 @@ Broadcast::channel('message.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('presence-user-present.{roomId}', function($user, $roomId){
-	 if ($user->canJoinRoom($roomId)) {
-        return ['id' => $user->id, 'name' => $user->name];
-    }
+Broadcast::channel('presence-user-present.{roomID}', function($user, $roomID){
+	$memberOne = preg_split('/-/', $roomID)[0];
+	$memberTwo = preg_split('/-/', $roomID)[1];
+	if((int) $user->id === (int) $memberOne || (int) $user->id === (int) $memberTwo){
+		return ['id' => $user->id, 'name' => $user->name];
+	}
+	return false;
 });

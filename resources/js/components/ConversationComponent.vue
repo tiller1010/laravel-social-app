@@ -23,7 +23,7 @@
 	export default {
 		props: [
 			'user',
-			'userID',
+			'userid',
 			'currentuser'
 		],
 		data(){
@@ -34,7 +34,8 @@
 			}
 		},
         created() {
-            this.getFeed();
+            // this.getFeed();
+            this.joinConversation();
             this.listenForActivity();
             window.addEventListener('scroll', this.checkScroll);
         },
@@ -88,18 +89,48 @@
 	                    }
                     });
 
-                var presenceChannel = Echo.join('user-present.' + this.userID);
-                if(presenceChannel.members){
-	                var presentUser = presenceChannel.members.get(this.userID);
-	                console.log(presentUser);
-	            }
+				// if(this.userid > this.currentuser.id){
+    //             	var greater = this.userid;
+    //             	var lesser = this.currentuser.id;
+    //             } else {
+    //             	var greater = this.currentuser.id;                	
+    //             	var lesser = this.userid;
+    //             }
+    //             Echo.private('presence-user-present.' + greater + '-' + lesser)
+    //             	.listen('UserPresent', (e) => {
+    //             		console.log('ayyy', e)
+    //             	});
+            },
+            joinConversation(){
+
+                // Echo.join('presence-user-present.' + this.currentuser.id)
+                if(this.userid > this.currentuser.id){
+                	var greater = this.userid;
+                	var lesser = this.currentuser.id;
+                } else {
+                	var greater = this.currentuser.id;                	
+                	var lesser = this.userid;
+                }
+                Echo.join('presence-user-present.' + greater + '-' + lesser)
+	               .here((users) => {
+	               		console.log(users)
+		               	console.log('Joined')
+	                });
+	             //    console.log(presenceChannel)
+	             //    if(presenceChannel.members){
+	             //    	console.log('ayy')
+	             //    	console.log(presenceChannel.members)
+		            //     // var presentUser = presenceChannel.members.get(this.currentuser.id);
+		            //     // console.log(presentUser);
+		            // }
+
             }
 		},
 		mounted(){
 			window.scrollTo(0, document.body.offsetHeight);
 		},
 		destroyed(){
-			Echo.leaveChannel('presence-user-present');
+			// Echo.leaveChannel('presence-user-present');
 		}
 	}
 </script>

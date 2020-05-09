@@ -33,6 +33,6 @@ class UserPresent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('presence-user-present.' . $this->user->id);
+        return new PresenceChannel('user-present.' . $this->user->id);
     }
 }

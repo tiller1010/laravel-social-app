@@ -143,7 +143,7 @@ class MessagesController extends Controller
 
             $allMessages = $sentMessages->merge($recievedMessages)->sortBy('created_at');
 
-            broadcast(new UserPresent(User::find($connectedUser)));
+            broadcast(new UserPresent($user));
 
             return view('Messages.show')
                 ->with(compact('sentMessages'))

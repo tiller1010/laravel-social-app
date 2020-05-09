@@ -1930,7 +1930,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user', 'userID', 'currentuser'],
+  props: ['user', 'userid', 'currentuser'],
   data: function data() {
     return {
       typing: false,
@@ -1939,7 +1939,8 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.getFeed();
+    // this.getFeed();
+    this.joinConversation();
     this.listenForActivity();
     window.addEventListener('scroll', this.checkScroll);
   },
@@ -1992,20 +1993,44 @@ __webpack_require__.r(__webpack_exports__);
         if (e.message.From == _this.user) {
           _this.newMessagesExist = true;
         }
-      });
-      var presenceChannel = Echo.join('user-present.' + this.userID);
-
-      if (presenceChannel.members) {
-        var presentUser = presenceChannel.members.get(this.userID);
-        console.log(presentUser);
+      }); // if(this.userid > this.currentuser.id){
+      //             	var greater = this.userid;
+      //             	var lesser = this.currentuser.id;
+      //             } else {
+      //             	var greater = this.currentuser.id;                	
+      //             	var lesser = this.userid;
+      //             }
+      //             Echo.private('presence-user-present.' + greater + '-' + lesser)
+      //             	.listen('UserPresent', (e) => {
+      //             		console.log('ayyy', e)
+      //             	});
+    },
+    joinConversation: function joinConversation() {
+      // Echo.join('presence-user-present.' + this.currentuser.id)
+      if (this.userid > this.currentuser.id) {
+        var greater = this.userid;
+        var lesser = this.currentuser.id;
+      } else {
+        var greater = this.currentuser.id;
+        var lesser = this.userid;
       }
+
+      Echo.join('presence-user-present.' + greater + '-' + lesser).here(function (users) {
+        console.log(users);
+        console.log('Joined');
+      }); //    console.log(presenceChannel)
+      //    if(presenceChannel.members){
+      //    	console.log('ayy')
+      //    	console.log(presenceChannel.members)
+      //     // var presentUser = presenceChannel.members.get(this.currentuser.id);
+      //     // console.log(presentUser);
+      // }
     }
   },
   mounted: function mounted() {
     window.scrollTo(0, document.body.offsetHeight);
   },
-  destroyed: function destroyed() {
-    Echo.leaveChannel('presence-user-present');
+  destroyed: function destroyed() {// Echo.leaveChannel('presence-user-present');
   }
 });
 
