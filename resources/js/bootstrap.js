@@ -1,6 +1,7 @@
 import Echo from 'laravel-echo';
 import Pusher from "pusher-js";
 
+window.$ = require('jquery');
 window._ = require('lodash');
 
 window.Echo = new Echo({

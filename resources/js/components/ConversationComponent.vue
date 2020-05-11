@@ -4,15 +4,19 @@
 			<div v-if="newMessage.From == user" style="margin-bottom: 40px;" class="alert alert-info receivedMessage">
 				<p>{{newMessage.Message}}</p>
 			</div>
+			<div v-else style="margin-bottom: 40px;" class="alert alert-info sentMessage">
+				<p>{{newMessage}}</p>
+			</div>
 		</div>
 		<div class="py-3 typing-status" v-if="typing">You are typing</div>
-		<div class="py-3 typing-status" v-else>{{ user }} is waiting</div>
+		<div class="py-3 typing-status" v-else-if="present">{{ user }} is waiting</div>
+		<div class="py-3 typing-status" v-else="typing">{{ user }} is away</div>
 		<div class="d-flex fixed-input">
 			<div class="form-group">
 				<label for="message">Message:</label>
 				<textarea v-on:input="isTyping()" name="Message" class="form-control" style="resize: none;"></textarea>
 			</div>
-			<input type="submit" class="btn btn-primary" value="Send">
+			<input v-on:click="submitHandler()" type="button" class="btn btn-primary" value="Send">
 		</div>
 		<div v-on:scroll="checkScroll()" v-if="newMessagesExist" class="newMessagesButton">
 			<div class="btn btn-success" v-on:click="scrollBottom()">New Messages</div>
@@ -24,13 +28,15 @@
 		props: [
 			'user',
 			'userid',
-			'currentuser'
+			'currentuser',
+			'url'
 		],
 		data(){
 			return {
 				typing: false,
 				feed: {},
-				newMessagesExist: false
+				newMessagesExist: false,
+				present: false
 			}
 		},
         created() {
@@ -66,6 +72,32 @@
     //                 this.message = '';
     //             });
             },
+
+
+		    submitHandler(){
+		     const context = this;
+		     let message = $('.conversation-form textarea').val();
+		     $.ajaxSetup({
+		          headers: {
+		              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		          }
+		      });
+		      $.ajax({
+		        url: context.url + '/messages',
+		        type: "POST",
+		        data: $('.conversation-form').serialize()
+		      }).done((data) => {
+		      		console.log(this.feed)
+                    this.feed[Object.keys(this.feed).length] = message;
+                    this.$forceUpdate();
+				    $('.conversation-form textarea').val("");
+		      });
+		      setTimeout(() => {
+			    this.scrollBottom();
+		      }, 1000);
+		    },
+
+
             scrollBottom(){
 				window.scrollTo(0, document.body.offsetHeight);
 				this.newMessagesExist = false;
@@ -89,20 +121,9 @@
 	                    }
                     });
 
-				// if(this.userid > this.currentuser.id){
-    //             	var greater = this.userid;
-    //             	var lesser = this.currentuser.id;
-    //             } else {
-    //             	var greater = this.currentuser.id;                	
-    //             	var lesser = this.userid;
-    //             }
-    //             Echo.private('presence-user-present.' + greater + '-' + lesser)
-    //             	.listen('UserPresent', (e) => {
-    //             		console.log('ayyy', e)
-    //             	});
             },
             joinConversation(){
-
+            	const context = this;
                 // Echo.join('presence-user-present.' + this.currentuser.id)
                 if(this.userid > this.currentuser.id){
                 	var greater = this.userid;
@@ -114,8 +135,21 @@
                 Echo.join('presence-user-present.' + greater + '-' + lesser)
 	               .here((users) => {
 	               		console.log(users)
-		               	console.log('Joined')
-	                });
+		               	console.log('you Joined')
+		               	if(users.length > 1){
+		               		context.present = true;
+		               	}
+	                })
+	               .joining((user) => {
+	               		console.log(user.name, ' is joining')
+		               	// if(users.length > 1){
+		               		context.present = true;
+		               	// }
+	               })
+	               .leaving((user) => {
+	               		console.log(user.name, ' is leaving')
+	               		context.present = false;
+	               });
 	             //    console.log(presenceChannel)
 	             //    if(presenceChannel.members){
 	             //    	console.log('ayy')

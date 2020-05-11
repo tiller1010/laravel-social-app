@@ -39,6 +39,7 @@
 		:user="'{{ \App\User::where('id', $connectedUser)->first()->name }}'"
 		:userid="'{{ $connectedUser }}'"
 		:currentuser="{{ $user }}"
+		:url="'{{ Illuminate\Support\Facades\URL::to('') }}'"
 	></conversation-component>
 	<input type="hidden" name="To" value="{{ \App\User::where('id', $connectedUser)->first()->name }}" />
 </form>
