@@ -105,7 +105,7 @@ class MessagesController extends Controller
                 'From' => $FromUser->name,
                 'From_user_id' => $FromUser->id,
                 'To_user_id' => $ToUser->id,
-                'Read' => false
+                'Read' => request('read')
             ]);
 
             broadcast(new MessageSent($sentMessage));

@@ -1933,6 +1933,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user', 'userid', 'currentuser', 'url'],
   data: function data() {
@@ -1944,7 +1948,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    // this.getFeed();
     this.joinConversation();
     this.listenForActivity();
     window.addEventListener('scroll', this.checkScroll);
@@ -1957,22 +1960,6 @@ __webpack_require__.r(__webpack_exports__);
         context.typing = false;
       }, 1200);
       context.typing = true;
-    },
-    getFeed: function getFeed() {// let context = this;
-      // return axios.get('/api/activities?api_token=bec3540e3e7e40469c36', {})
-      // .then(function(response) {
-      // 	// console.log('getFeed response', response)
-      //     context.feed = response.data.data;
-      // });
-    },
-    updateFeed: function updateFeed(messageID) {// axios.post('/api/messages/'+ messageID +'/comments/store?api_token=bec3540e3e7e40469c36', {
-      //     message: this.message
-      // }).
-      //  then((message) => {
-      //                 console.log(message);
-      //                 this.messages.push(message.data);
-      //                 this.message = '';
-      //             });
     },
     submitHandler: function submitHandler() {
       var _this = this;
@@ -2012,10 +1999,6 @@ __webpack_require__.r(__webpack_exports__);
     listenForActivity: function listenForActivity() {
       var _this2 = this;
 
-      // Echo.private('activity.' + this.currentuser.id)
-      //     .listen('ActivityLogged', (e) => {
-      //         this.feed[Object.keys(this.feed).length] = e.data;
-      //     });
       Echo["private"]('message.' + this.currentuser.id).listen('MessageSent', function (e) {
         _this2.feed[Object.keys(_this2.feed).length] = e.message;
 
@@ -2027,7 +2010,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     joinConversation: function joinConversation() {
-      var context = this; // Echo.join('presence-user-present.' + this.currentuser.id)
+      var context = this;
 
       if (this.userid > this.currentuser.id) {
         var greater = this.userid;
@@ -2045,25 +2028,16 @@ __webpack_require__.r(__webpack_exports__);
           context.present = true;
         }
       }).joining(function (user) {
-        console.log(user.name, ' is joining'); // if(users.length > 1){
-
-        context.present = true; // }
+        console.log(user.name, ' is joining');
+        context.present = true;
       }).leaving(function (user) {
         console.log(user.name, ' is leaving');
         context.present = false;
-      }); //    console.log(presenceChannel)
-      //    if(presenceChannel.members){
-      //    	console.log('ayy')
-      //    	console.log(presenceChannel.members)
-      //     // var presentUser = presenceChannel.members.get(this.currentuser.id);
-      //     // console.log(presentUser);
-      // }
+      });
     }
   },
   mounted: function mounted() {
     window.scrollTo(0, document.body.offsetHeight);
-  },
-  destroyed: function destroyed() {// Echo.leaveChannel('presence-user-present');
   }
 });
 
@@ -40510,6 +40484,12 @@ var render = function() {
             }
           })
         ]),
+        _vm._v(" "),
+        _vm.present
+          ? _c("input", { attrs: { type: "hidden", name: "read", value: "1" } })
+          : _c("input", {
+              attrs: { type: "hidden", name: "read", value: "0" }
+            }),
         _vm._v(" "),
         _c("input", {
           staticClass: "btn btn-primary",

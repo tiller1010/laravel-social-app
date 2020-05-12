@@ -16,6 +16,10 @@
 				<label for="message">Message:</label>
 				<textarea v-on:input="isTyping()" name="Message" class="form-control" style="resize: none;"></textarea>
 			</div>
+			<input v-if="present" type="hidden" name="read" value="1">
+			<input v-else type="hidden" name="read" value="0">
+			<!-- If we need to debug form, turns ajax off -->
+			<!-- <input action="/messages" type="submit" class="btn btn-primary" value="Send"> -->
 			<input v-on:click="submitHandler()" type="button" class="btn btn-primary" value="Send">
 		</div>
 		<div v-on:scroll="checkScroll()" v-if="newMessagesExist" class="newMessagesButton">
@@ -40,7 +44,6 @@
 			}
 		},
         created() {
-            // this.getFeed();
             this.joinConversation();
             this.listenForActivity();
             window.addEventListener('scroll', this.checkScroll);
@@ -54,26 +57,6 @@
 				}, 1200);
 				context.typing = true;
 			},
-			getFeed() {
-                // let context = this;
-                // return axios.get('/api/activities?api_token=bec3540e3e7e40469c36', {})
-                // .then(function(response) {
-                // 	// console.log('getFeed response', response)
-                //     context.feed = response.data.data;
-                // });
-            },
-            updateFeed(messageID) {
-				// axios.post('/api/messages/'+ messageID +'/comments/store?api_token=bec3540e3e7e40469c36', {
-				//     message: this.message
-				// }).
-				//  then((message) => {
-    //                 console.log(message);
-    //                 this.messages.push(message.data);
-    //                 this.message = '';
-    //             });
-            },
-
-
 		    submitHandler(){
 		     const context = this;
 		     let message = $('.conversation-form textarea').val();
@@ -108,10 +91,6 @@
 				}
             },
             listenForActivity() {
-                // Echo.private('activity.' + this.currentuser.id)
-                //     .listen('ActivityLogged', (e) => {
-                //         this.feed[Object.keys(this.feed).length] = e.data;
-                //     });
                 Echo.private('message.' + this.currentuser.id)
                     .listen('MessageSent', (e) => {
                         this.feed[Object.keys(this.feed).length] = e.message;
@@ -124,7 +103,6 @@
             },
             joinConversation(){
             	const context = this;
-                // Echo.join('presence-user-present.' + this.currentuser.id)
                 if(this.userid > this.currentuser.id){
                 	var greater = this.userid;
                 	var lesser = this.currentuser.id;
@@ -142,29 +120,17 @@
 	                })
 	               .joining((user) => {
 	               		console.log(user.name, ' is joining')
-		               	// if(users.length > 1){
 		               		context.present = true;
-		               	// }
 	               })
 	               .leaving((user) => {
 	               		console.log(user.name, ' is leaving')
 	               		context.present = false;
 	               });
-	             //    console.log(presenceChannel)
-	             //    if(presenceChannel.members){
-	             //    	console.log('ayy')
-	             //    	console.log(presenceChannel.members)
-		            //     // var presentUser = presenceChannel.members.get(this.currentuser.id);
-		            //     // console.log(presentUser);
-		            // }
 
             }
 		},
 		mounted(){
 			window.scrollTo(0, document.body.offsetHeight);
-		},
-		destroyed(){
-			// Echo.leaveChannel('presence-user-present');
 		}
 	}
 </script>
