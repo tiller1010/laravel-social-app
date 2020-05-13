@@ -21,6 +21,7 @@
 									<label for="message">Message:</label>
 									<textarea name="Message" class="form-control" style="resize: none;"></textarea>
 								</div>
+								<input type="hidden" name="read" value="0">
 								<input type="submit" class="btn btn-primary" value="Send">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 							</form>
@@ -52,6 +53,7 @@
 								<label for="message">Message:</label>
 								<textarea name="Message" class="form-control" style="resize: none;"></textarea>
 							</div>
+							<input type="hidden" name="read" value="0">
 							<input type="submit" class="btn btn-primary" value="Send">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						</form>
