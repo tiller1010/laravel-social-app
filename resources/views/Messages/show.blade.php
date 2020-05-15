@@ -33,7 +33,7 @@
 	@endforeach
 </div>
 
-<form class="conversation-form" action="/messages" method="POST">
+<form class="conversation conversation-form" action="/messages" method="POST">
 	@csrf
 	<conversation-component
 		:user="'{{ \App\User::where('id', $connectedUser)->first()->name }}'"

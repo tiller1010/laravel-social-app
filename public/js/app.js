@@ -1937,6 +1937,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user', 'userid', 'currentuser', 'url'],
   data: function data() {
@@ -1976,7 +1980,6 @@ __webpack_require__.r(__webpack_exports__);
         type: "POST",
         data: $('.conversation-form').serialize()
       }).done(function (data) {
-        console.log(_this.feed);
         _this.feed[Object.keys(_this.feed).length] = message;
 
         _this.$forceUpdate();
@@ -1993,7 +1996,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     checkScroll: function checkScroll() {
       if (window.scrollY + 670 >= document.body.offsetHeight) {
-        this.newMessagesExist = false;
+        if (this.newMessagesExist) {
+          this.newMessagesExist = false;
+        }
       }
     },
     listenForActivity: function listenForActivity() {
@@ -2006,6 +2011,12 @@ __webpack_require__.r(__webpack_exports__);
 
         if (e.message.From == _this2.user) {
           _this2.newMessagesExist = true;
+
+          if (window.scrollY + 670 >= document.body.offsetHeight) {
+            setTimeout(function () {
+              _this2.scrollBottom();
+            }, 1);
+          }
         }
       });
     },
@@ -2021,9 +2032,6 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       Echo.join('presence-user-present.' + greater + '-' + lesser).here(function (users) {
-        console.log(users);
-        console.log('you Joined');
-
         if (users.length > 1) {
           context.present = true;
         }
@@ -40449,7 +40457,7 @@ var render = function() {
             : _c(
                 "div",
                 {
-                  staticClass: "alert alert-info sentMessage",
+                  staticClass: "alert alert-dark sentMessage",
                   staticStyle: { "margin-bottom": "40px" }
                 },
                 [_c("p", [_vm._v(_vm._s(newMessage))])]
@@ -40524,7 +40532,41 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("New Messages")]
+                [
+                  _vm._v("New Messages "),
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "bi bi-arrow-bar-down",
+                      attrs: {
+                        width: "1em",
+                        height: "1em",
+                        viewBox: "0 0 16 16",
+                        fill: "currentColor",
+                        xmlns: "http://www.w3.org/2000/svg"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          "fill-rule": "evenodd",
+                          d:
+                            "M11.354 10.146a.5.5 0 010 .708l-3 3a.5.5 0 01-.708 0l-3-3a.5.5 0 01.708-.708L8 12.793l2.646-2.647a.5.5 0 01.708 0z",
+                          "clip-rule": "evenodd"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        attrs: {
+                          "fill-rule": "evenodd",
+                          d:
+                            "M8 6a.5.5 0 01.5.5V13a.5.5 0 01-1 0V6.5A.5.5 0 018 6zM2 3.5a.5.5 0 01.5-.5h11a.5.5 0 010 1h-11a.5.5 0 01-.5-.5z",
+                          "clip-rule": "evenodd"
+                        }
+                      })
+                    ]
+                  )
+                ]
               )
             ]
           )
