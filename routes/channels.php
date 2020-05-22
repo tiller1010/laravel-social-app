@@ -27,3 +27,7 @@ Broadcast::channel('presence-user-present.{roomID}', function($user, $roomID){
 	}
 	return false;
 });
+
+Broadcast::channel('ping-user.{id}', function($user, $id){
+    return (int) $user->id === (int) $id;
+});

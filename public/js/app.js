@@ -1941,11 +1941,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user', 'userid', 'currentuser', 'url'],
+  props: [//Name of other user
+  'user', //That user's id
+  'userid', //Your user object
+  'currentuser', 'url'],
   data: function data() {
     return {
       typing: false,
+      otherTyping: false,
       feed: {},
       newMessagesExist: false,
       present: false
@@ -1962,8 +1967,15 @@ __webpack_require__.r(__webpack_exports__);
       clearTimeout(context.inactive);
       context.inactive = setTimeout(function () {
         context.typing = false;
-      }, 1200);
+      }, 600);
       context.typing = true;
+      $.ajax({
+        url: context.url + "/api/ping-user",
+        type: "POST",
+        data: {
+          pingedUserId: this.userid
+        }
+      });
     },
     submitHandler: function submitHandler() {
       var _this = this;
@@ -2004,6 +2016,7 @@ __webpack_require__.r(__webpack_exports__);
     listenForActivity: function listenForActivity() {
       var _this2 = this;
 
+      var context = this;
       Echo["private"]('message.' + this.currentuser.id).listen('MessageSent', function (e) {
         _this2.feed[Object.keys(_this2.feed).length] = e.message;
 
@@ -2018,6 +2031,14 @@ __webpack_require__.r(__webpack_exports__);
             }, 1);
           }
         }
+      });
+      Echo["private"]('ping-user.' + this.currentuser.id).listen('PingUser', function (e) {
+        context.otherTyping = true;
+        clearTimeout(context.otherInactive);
+        context.otherInactive = setTimeout(function () {
+          context.otherTyping = false;
+        }, 600);
+        context.otherTyping = true;
       });
     },
     joinConversation: function joinConversation() {
@@ -40662,7 +40683,11 @@ var render = function() {
         ])
       }),
       _vm._v(" "),
-      _vm.typing
+      _vm.otherTyping
+        ? _c("div", { staticClass: "py-3 typing-status" }, [
+            _vm._v(_vm._s(_vm.user) + " is typing")
+          ])
+        : _vm.typing
         ? _c("div", { staticClass: "py-3 typing-status" }, [
             _vm._v("You are typing")
           ])

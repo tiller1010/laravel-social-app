@@ -8,7 +8,8 @@
 				<p>{{newMessage}}</p>
 			</div>
 		</div>
-		<div class="py-3 typing-status" v-if="typing">You are typing</div>
+		<div class="py-3 typing-status" v-if="otherTyping">{{ user }} is typing</div>
+		<div class="py-3 typing-status" v-else-if="typing">You are typing</div>
 		<div class="py-3 typing-status" v-else-if="present">{{ user }} is waiting</div>
 		<div class="py-3 typing-status" v-else="typing">{{ user }} is away</div>
 		<div class="d-flex fixed-input">
@@ -34,14 +35,18 @@
 <script>
 	export default {
 		props: [
+			//Name of other user
 			'user',
+			//That user's id
 			'userid',
+			//Your user object
 			'currentuser',
 			'url'
 		],
 		data(){
 			return {
 				typing: false,
+				otherTyping: false,
 				feed: {},
 				newMessagesExist: false,
 				present: false
@@ -58,8 +63,16 @@
 				clearTimeout(context.inactive);
 				context.inactive = setTimeout(function(){
 					context.typing = false;
-				}, 1200);
+				}, 600);
 				context.typing = true;
+
+			    $.ajax({
+			      		url: context.url + "/api/ping-user",
+			      		type: "POST",
+			      		data: {
+		      			pingedUserId: this.userid 
+		      		}
+		      	});
 			},
 		    submitHandler(){
 		     const context = this;
@@ -94,6 +107,7 @@
 				}
             },
             listenForActivity() {
+            	var context = this;
                 Echo.private('message.' + this.currentuser.id)
                     .listen('MessageSent', (e) => {
                         this.feed[Object.keys(this.feed).length] = e.message;
@@ -107,6 +121,15 @@
 	                        }
 	                    }
                     });
+				Echo.private('ping-user.' + this.currentuser.id)
+					.listen('PingUser', (e) => {
+						context.otherTyping = true;
+						clearTimeout(context.otherInactive);
+						context.otherInactive = setTimeout(function(){
+							context.otherTyping = false;
+						}, 600);
+						context.otherTyping = true;
+					});                  
 
             },
             joinConversation(){

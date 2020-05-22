@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Events\PingUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,8 @@ Route::group(['middleware' => ['auth:api']], function() {
 	// Route::post('tasks/{task}/comments/store', 'Api\CommentController@store');
 	// Route::get('tasks/{task}/comments', 'Api\CommentController@index');
 	Route::get('activities', 'Api\ActivityController@index');
+});
+
+Route::post('/ping-user', function(Request $request){
+	broadcast(new PingUser($request->pingedUserId));
 });

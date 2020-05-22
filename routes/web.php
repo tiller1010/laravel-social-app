@@ -28,3 +28,8 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+
+
+// Route::post('/ping-user', function(Request $request){
+// 	broadcast(new PingUser($request->pingedUserId));
+// });
