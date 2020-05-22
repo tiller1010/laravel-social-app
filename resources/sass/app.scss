@@ -40,6 +40,11 @@ nav.navbar{
 		margin-bottom: 0;
 	}
 }
+.index-message{
+	text-decoration: none !important;
+	display: block;
+	margin-bottom: 40px;
+}
 
 .back-button{
 	z-index: 2;
@@ -95,7 +100,8 @@ nav.navbar{
 	}
 	.btn{
 		width: 20%;
-		height: 80px;
+		height: 68px;
+		box-sizing: content-box;
 	}
 }
 
@@ -106,7 +112,5 @@ textarea {
 }
 
 @media only screen and (max-width: 420px){
-	.fixed-input .btn{
-		height: 68px;
-	}
+	
 }
