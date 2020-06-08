@@ -62,7 +62,7 @@
 				clearTimeout(context.inactive);
 				context.inactive = setTimeout(function(){
 					context.typing = false;
-				}, 600);
+				}, 1000);
 				context.typing = true;
 
 			    $.ajax({
@@ -109,25 +109,31 @@
             	var context = this;
                 Echo.private('message.' + this.currentuser.id)
                     .listen('MessageSent', (e) => {
-                        this.feed[Object.keys(this.feed).length] = e.message;
-                        this.$forceUpdate();
-                        if(e.message.From == this.user){
-	                        this.newMessagesExist = true;
-			            	if(window.scrollY + 670 >= document.body.offsetHeight){
-						      setTimeout(() => {
-							    this.scrollBottom();
-						      }, 1);
-	                        }
-	                    }
+						if(e.message.From_user_id == context.userid){
+	                        this.feed[Object.keys(this.feed).length] = e.message;
+	                        this.$forceUpdate();
+	                        if(e.message.From == this.user){
+		                        this.newMessagesExist = true;
+				            	if(window.scrollY + 670 >= document.body.offsetHeight){
+							      setTimeout(() => {
+								    this.scrollBottom();
+							      }, 1);
+		                        }
+		                    }
+						}
                     });
 				Echo.private('ping-user.' + this.currentuser.id)
 					.listen('PingUser', (e) => {
-						context.otherTyping = true;
-						clearTimeout(context.otherInactive);
-						context.otherInactive = setTimeout(function(){
-							context.otherTyping = false;
-						}, 600);
-						context.otherTyping = true;
+						if(e.userID == context.currentuser.id){
+						// if(e.userID == context.userid){
+							console.log(e)
+							context.otherTyping = true;
+							clearTimeout(context.otherInactive);
+							context.otherInactive = setTimeout(function(){
+								context.otherTyping = false;
+							}, 1000);
+							context.otherTyping = true;
+						}
 					});                  
 
             },

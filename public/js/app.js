@@ -1966,7 +1966,7 @@ __webpack_require__.r(__webpack_exports__);
       clearTimeout(context.inactive);
       context.inactive = setTimeout(function () {
         context.typing = false;
-      }, 600);
+      }, 1000);
       context.typing = true;
       $.ajax({
         url: context.url + "/api/ping-user",
@@ -2017,27 +2017,33 @@ __webpack_require__.r(__webpack_exports__);
 
       var context = this;
       Echo["private"]('message.' + this.currentuser.id).listen('MessageSent', function (e) {
-        _this2.feed[Object.keys(_this2.feed).length] = e.message;
+        if (e.message.From_user_id == context.userid) {
+          _this2.feed[Object.keys(_this2.feed).length] = e.message;
 
-        _this2.$forceUpdate();
+          _this2.$forceUpdate();
 
-        if (e.message.From == _this2.user) {
-          _this2.newMessagesExist = true;
+          if (e.message.From == _this2.user) {
+            _this2.newMessagesExist = true;
 
-          if (window.scrollY + 670 >= document.body.offsetHeight) {
-            setTimeout(function () {
-              _this2.scrollBottom();
-            }, 1);
+            if (window.scrollY + 670 >= document.body.offsetHeight) {
+              setTimeout(function () {
+                _this2.scrollBottom();
+              }, 1);
+            }
           }
         }
       });
       Echo["private"]('ping-user.' + this.currentuser.id).listen('PingUser', function (e) {
-        context.otherTyping = true;
-        clearTimeout(context.otherInactive);
-        context.otherInactive = setTimeout(function () {
-          context.otherTyping = false;
-        }, 600);
-        context.otherTyping = true;
+        if (e.userID == context.currentuser.id) {
+          // if(e.userID == context.userid){
+          console.log(e);
+          context.otherTyping = true;
+          clearTimeout(context.otherInactive);
+          context.otherInactive = setTimeout(function () {
+            context.otherTyping = false;
+          }, 1000);
+          context.otherTyping = true;
+        }
       });
     },
     joinConversation: function joinConversation() {
