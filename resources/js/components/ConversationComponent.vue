@@ -14,7 +14,6 @@
 		<div class="py-3 typing-status" v-else="typing">{{ user }} is away</div>
 		<div class="d-flex fixed-input">
 			<div class="form-group">
-				<label for="message">Message:</label>
 				<textarea v-on:input="isTyping()" name="Message" class="form-control" style="resize: none;"></textarea>
 			</div>
 			<input v-if="present" type="hidden" name="read" value="1">

@@ -66,9 +66,9 @@ nav.navbar{
 }
 .typing-status{
 	position: fixed;
-	left: 5%;
-	bottom: 100px;
+	bottom: 80px;
 	color: #fff;
+	text-shadow: 1px 1px #000;
 }
 .newMessagesButton{
 	position: fixed;
@@ -92,15 +92,16 @@ nav.navbar{
 	bottom: 0;
 	align-items: flex-end;
 	width: 90%;
+	max-width: 700px;
 	left: 50%;
     transform: translateX(-50%);
+    align-items: stretch;
 	.form-group{
 		width: 80%;
 		margin-bottom: 0;
 	}
 	.btn{
 		width: 20%;
-		height: 68px;
 		box-sizing: content-box;
 	}
 }

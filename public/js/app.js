@@ -1941,7 +1941,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [//Name of other user
   'user', //That user's id
@@ -40701,8 +40700,6 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "d-flex fixed-input" }, [
         _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "message" } }, [_vm._v("Message:")]),
-          _vm._v(" "),
           _c("textarea", {
             staticClass: "form-control",
             staticStyle: { resize: "none" },
