@@ -15,14 +15,16 @@ class PingUser implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $userID;
+    public $fromUserID;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($userID)
+    public function __construct($userID, $fromUserID)
     {
         $this->userID = $userID;
+        $this->fromUserID = $fromUserID;
     }
 
     /**

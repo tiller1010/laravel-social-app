@@ -11,7 +11,8 @@ window.Echo = new Echo({
 	encrypted: true
 });
 
-Pusher.logToConsole = true;
+// SECURITY RISK WHEN TURNED ON, CAN SEE ANY MESSAGES SENT TO OTHER USERS
+Pusher.logToConsole = false;
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

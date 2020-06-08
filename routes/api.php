@@ -27,5 +27,5 @@ Route::group(['middleware' => ['auth:api']], function() {
 });
 
 Route::post('/ping-user', function(Request $request){
-	broadcast(new PingUser($request->pingedUserId));
+	broadcast(new PingUser($request->pingedUserId, $request->fromUserID));
 });

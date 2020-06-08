@@ -1972,7 +1972,8 @@ __webpack_require__.r(__webpack_exports__);
         url: context.url + "/api/ping-user",
         type: "POST",
         data: {
-          pingedUserId: this.userid
+          pingedUserId: this.userid,
+          fromUserID: this.currentuser.id
         }
       });
     },
@@ -2034,9 +2035,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
       Echo["private"]('ping-user.' + this.currentuser.id).listen('PingUser', function (e) {
-        if (e.userID == context.currentuser.id) {
-          // if(e.userID == context.userid){
-          console.log(e);
+        if (e.fromUserID == context.userid) {
           context.otherTyping = true;
           clearTimeout(context.otherInactive);
           context.otherInactive = setTimeout(function () {
@@ -53013,8 +53012,9 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   key: 'bec3540e3e7e40469c36',
   cluster: 'us2',
   encrypted: true
-});
-pusher_js__WEBPACK_IMPORTED_MODULE_1___default.a.logToConsole = true;
+}); // SECURITY RISK WHEN TURNED ON, CAN SEE ANY MESSAGES SENT TO OTHER USERS
+
+pusher_js__WEBPACK_IMPORTED_MODULE_1___default.a.logToConsole = false;
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

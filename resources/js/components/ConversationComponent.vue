@@ -69,8 +69,9 @@
 			      		url: context.url + "/api/ping-user",
 			      		type: "POST",
 			      		data: {
-		      			pingedUserId: this.userid 
-		      		}
+			      			pingedUserId: this.userid,
+			      			fromUserID: this.currentuser.id
+			      		}
 		      	});
 			},
 		    submitHandler(){
@@ -124,9 +125,7 @@
                     });
 				Echo.private('ping-user.' + this.currentuser.id)
 					.listen('PingUser', (e) => {
-						if(e.userID == context.currentuser.id){
-						// if(e.userID == context.userid){
-							console.log(e)
+						if(e.fromUserID == context.userid){
 							context.otherTyping = true;
 							clearTimeout(context.otherInactive);
 							context.otherInactive = setTimeout(function(){
