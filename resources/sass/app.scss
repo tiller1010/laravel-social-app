@@ -58,6 +58,18 @@ nav.navbar{
 	margin-left: auto;
 	max-width: 80%;
 	width: max-content;
+	&:after{
+		display: block;
+		width: 15px;
+		height: 15px;
+		background-color: #d6d8d9;
+		color: #d6d8d9;
+		clip-path: polygon(0 0, 100% 100%, 100% 0);
+		position: absolute;
+		right: -1px;
+		bottom: -14px;
+		content: '.';
+	}
 	p{
 		margin-bottom: 0;
 	}
@@ -66,6 +78,18 @@ nav.navbar{
 	margin-right: auto;
 	max-width: 80%;
 	width: max-content;
+	&:after{
+		display: block;
+		width: 15px;
+		height: 15px;
+		background-color: #e2f0fb;
+		color: #e2f0fb;
+		clip-path: polygon(0 0, 0% 100%, 100% 0);
+		position: absolute;
+		left: -1px;
+		bottom: -14px;
+		content: '.';
+	}
 	p{
 		margin-bottom: 0;
 	}

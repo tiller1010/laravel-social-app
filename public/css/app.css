@@ -10995,6 +10995,20 @@ nav.navbar {
   width: max-content;
 }
 
+.sentMessage:after {
+  display: block;
+  width: 15px;
+  height: 15px;
+  background-color: #d6d8d9;
+  color: #d6d8d9;
+  -webkit-clip-path: polygon(0 0, 100% 100%, 100% 0);
+          clip-path: polygon(0 0, 100% 100%, 100% 0);
+  position: absolute;
+  right: -1px;
+  bottom: -14px;
+  content: ".";
+}
+
 .sentMessage p {
   margin-bottom: 0;
 }
@@ -11005,6 +11019,20 @@ nav.navbar {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+}
+
+.receivedMessage:after {
+  display: block;
+  width: 15px;
+  height: 15px;
+  background-color: #e2f0fb;
+  color: #e2f0fb;
+  -webkit-clip-path: polygon(0 0, 0% 100%, 100% 0);
+          clip-path: polygon(0 0, 0% 100%, 100% 0);
+  position: absolute;
+  left: -1px;
+  bottom: -14px;
+  content: ".";
 }
 
 .receivedMessage p {
