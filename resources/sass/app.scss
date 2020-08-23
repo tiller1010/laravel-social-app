@@ -58,11 +58,17 @@ nav.navbar{
 	margin-left: auto;
 	max-width: 80%;
 	width: max-content;
+	p{
+		margin-bottom: 0;
+	}
 }
 .receivedMessage{
 	margin-right: auto;
 	max-width: 80%;
 	width: max-content;
+	p{
+		margin-bottom: 0;
+	}
 }
 .typing-status{
 	position: fixed;

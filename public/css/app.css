@@ -10995,12 +10995,20 @@ nav.navbar {
   width: max-content;
 }
 
+.sentMessage p {
+  margin-bottom: 0;
+}
+
 .receivedMessage {
   margin-right: auto;
   max-width: 80%;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+}
+
+.receivedMessage p {
+  margin-bottom: 0;
 }
 
 .typing-status {
